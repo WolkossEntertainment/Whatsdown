@@ -14,16 +14,25 @@ import { analyzeGroupEvents } from "./analysis/groupEvents";
 import type { ChatMessage } from "./parser/types";
 
 function getRecentMessages(messages: ChatMessage[]) {
-  const now = new Date();
-  const cutoff = new Date(now);
+  const realMessages = messages.filter(
+    (message): message is ChatMessage & { timestamp: Date } => {
+      return message.timestamp !== null && message.type !== "system";
+    }
+  );
+
+  if (realMessages.length === 0) return [];
+
+  const latestTimestamp = Math.max(
+    ...realMessages.map((message) => message.timestamp.getTime())
+  );
+
+  const latestDate = new Date(latestTimestamp);
+  const cutoff = new Date(latestDate);
 
   cutoff.setDate(cutoff.getDate() - 30);
 
-  return messages.filter((message) => {
-    if (!message.timestamp) return false;
-    if (message.type === "system") return false;
-
-    return message.timestamp >= cutoff;
+  return realMessages.filter((message) => {
+    return message.timestamp >= cutoff && message.timestamp <= latestDate;
   });
 }
 

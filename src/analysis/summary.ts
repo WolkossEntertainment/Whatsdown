@@ -41,7 +41,7 @@ export function calculateChatSummary(
     totalMessages: messages.filter((message) => message.type !== "system").length,
     totalParticipants: detectedParticipants.size,
 
-    recentMessages: recentMessages.length,
+    recentMessages: recentMessages.filter((message) => message.type !== "system").length,
     activeParticipantsLast30Days: recentSenders.size,
 
     joinedCount: groupEventStats?.joinedCount ?? 0,
