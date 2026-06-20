@@ -7,9 +7,18 @@ type Props = {
 };
 
 export function ExportButtons({ stats }: Props) {
+  async function handlePdfExport() {
+    try {
+      await exportReportToPdf("pdf-report");
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert("PDF export failed. Please try again.");
+    }
+  }
+
   return (
     <div style={{ display: "flex", gap: "12px", margin: "24px 0" }}>
-      <button onClick={() => exportReportToPdf("pdf-report")}>
+      <button onClick={handlePdfExport}>
         Export PDF
       </button>
 
