@@ -1,11 +1,5 @@
 import type { ChatMessage } from "./types";
 
-export type WhatsAppMessage = {
-  date: Date;
-  sender: string;
-  text: string;
-};
-
 const messageStartRegex =
   /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s+(\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM|am|pm)?)\s+-\s+(.*)$/;
 
