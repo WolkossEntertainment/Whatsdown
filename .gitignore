@@ -134,3 +134,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# Private WhatsApp/chat/export files
+*.txt
+*.csv
+*.xlsx
+*.pdf
+
+# Allow fake example chat files
+!examples/*.txt
