@@ -3,11 +3,19 @@ import html2canvas from "html2canvas";
 
 export async function exportReportToPdf(elementId: string) {
   const element = document.getElementById(elementId);
-  if (!element) return;
+
+  if (!element) {
+    throw new Error(`Could not find element with id="${elementId}"`);
+  }
 
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
+    backgroundColor: "#ffffff",
+    width: element.scrollWidth,
+    height: element.scrollHeight,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
   });
 
   const imgData = canvas.toDataURL("image/png");
@@ -26,7 +34,7 @@ export async function exportReportToPdf(elementId: string) {
   heightLeft -= pageHeight;
 
   while (heightLeft > 0) {
-    position = heightLeft - imgHeight;
+    position -= pageHeight;
     pdf.addPage();
     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
